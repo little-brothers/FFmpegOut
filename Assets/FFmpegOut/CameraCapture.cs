@@ -39,7 +39,7 @@ namespace FFmpegOut
         void OnValidate()
         {
             _startTime = Mathf.Max(_startTime, 0);
-            _recordLength = Mathf.Max(_recordLength, 0.01f);
+            _recordLength = Mathf.Max(_recordLength, 0f);
         }
 
         void OnEnable()
@@ -74,11 +74,11 @@ namespace FFmpegOut
         {
             _elapsed += Time.deltaTime;
 
-            if (_startTime <= _elapsed && _elapsed < _startTime + _recordLength)
+            if (_startTime <= _elapsed)
             {
                 if (_pipe == null) OpenPipe();
             }
-            else
+            else if (_recordLength > 0)
             {
                 if (_pipe != null) ClosePipe();
             }
